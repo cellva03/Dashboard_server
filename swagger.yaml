@@ -1,0 +1,424 @@
+swagger: '2.0'
+info:
+  description: |
+    This is a Admin Dashboard API for  a admin server.
+  version: 1.0.0
+  title: Swagger Admin Dashboard
+tags:
+- name: auth
+  description: Authentication on Admin
+- name: users
+  description: CRUD on Users
+- name: sales
+  description: Report for Sales
+- name: products
+  description: CRUD on Users
+paths:
+  /auth/login:
+    post:
+      tags:
+      - auth
+      summary: Logging in to app
+      operationId: Login
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Admin object that needs to be logging to the app
+        required: true
+        schema:
+          $ref: '#/definitions/Admin'
+      responses:
+        405:
+          description: Invalid input
+        200: 
+          description: Valid User
+  /auth/signup:
+    post:
+      tags:
+      - auth
+      summary: Signing in to the app
+      operationId: Signup
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Admin object that needs to be signing to the app
+        required: true
+        schema:
+          $ref: '#/definitions/Admin'
+      responses:
+        405:
+          description: Invalid input
+        200:
+          description: Valid Admin
+  /users:
+    get:
+      tags:
+      - users
+      summary: Get all user from DataBase
+      description: This can only be done by the logged in admin.
+      operationId: getAllUser
+      produces:
+      - application/json
+      responses:
+        200:
+          description: get all the users
+          schema:
+            $ref: '#/definitions/User'
+        400:
+          description: can not get the users
+  /users/new:
+    post:
+      tags:
+      - users
+      summary: Create user
+      description: This can only be done by the logged in user.
+      operationId: createUser
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: Created user object
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/User'
+        400:
+          description: No user found
+            
+        
+  /users/{_id}:
+    get:
+      tags:
+      - users
+      summary: Get a single user by id
+      operationId: getid
+      produces:
+      - application/json
+      parameters:
+      - name: _id
+        in: path
+        description: get single user object from Database 
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/User'
+        400:
+          description: Invalid id supplied
+        404:
+          description: User not found
+    post:
+      tags:
+      - users
+      summary: Update user
+      description: This can only be done by the logged in user.
+      operationId: Update user
+      produces:
+      - application/json
+      parameters:
+      - name: _id
+        in: path
+        description: user need to be updated
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: Updated user object
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        400:
+          description: Invalid user supplied
+        404:
+          description: User not found
+    delete:
+      tags:
+      - users
+      summary: Delete user
+      description: This can only be done by the logged in user.
+      operationId: deleteUser
+      produces:
+      - application/json
+      parameters:
+      - name: _id
+        in: path
+        description: The name that needs to be deleted
+        required: true
+        type: string
+      responses:
+        200:
+          description: User has been successfully deleted.
+        400:
+          description: Invalid username supplied
+        404:
+          description: User not found
+  /products:
+    get:
+      tags:
+      - products
+      summary: Get all product from DataBase
+      description: This can only be done by the logged in admin.
+      operationId: getAllProduct
+      produces:
+      - application/json
+      responses:
+        200:
+          description: get all the products
+          schema:
+            $ref: '#/definitions/Product'
+        400:
+          description: can not get the products
+  /products/new:
+    post:
+      tags:
+      - products
+      summary: Create product
+      description: This can only be done by the logged in user.
+      operationId: createProduct
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Created Product object
+        required: true
+        schema:
+          $ref: '#/definitions/Product'
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Product'
+        400:
+          description: No product found
+  /sales:
+    get:
+      tags:
+      - sales
+      summary: Get all sales from DataBase
+      description: This can only be done by the logged in admin.
+      operationId: getAllSales
+      produces:
+      - application/json
+      responses:
+        200:
+          description: get all the sales
+          schema:
+            $ref: '#/definitions/Sales'
+        400:
+          description: can not get the sales          
+        
+  /products/{_id}:
+    get:
+      tags:
+      - products
+      summary: Get a single Product by id
+      operationId: getproduct by id
+      produces:
+      - application/json
+      parameters:
+      - name: _id
+        in: path
+        description: get single product object from Database 
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Product'
+        400:
+          description: Invalid id supplied
+        404:
+          description: Product not found
+    post:
+      tags:
+      - products
+      summary: Update product
+      description: This can only be done by the logged in user.
+      operationId: Update product
+      produces:
+      - application/json
+      parameters:
+      - name: _id
+        in: path
+        description: product need to be updated
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: Updated product object
+        required: true
+        schema:
+          $ref: '#/definitions/Product'
+      responses:
+        400:
+          description: Invalid Product supplied
+        404:
+          description: Product not found
+    delete:
+      tags:
+      - products
+      summary: Delete Product
+      description: This can only be done by the logged in user.
+      operationId: deleteProduct
+      produces:
+      - application/json
+      parameters:
+      - name: _id
+        in: path
+        description: The product that needs to be deleted
+        required: true
+        type: string
+      responses:
+        200:
+          description: product has been successfully deleted.
+        400:
+          description: Invalid product id supplied
+        404:
+          description: product not found
+securityDefinitions:
+  petstore_auth:
+    type: oauth2
+    authorizationUrl: http://localhost:4001/api
+    flow: implicit
+definitions:
+  User:
+    type: object
+    required:
+    - username
+    - firstName
+    - lastName
+    - phone
+    - email
+    - password
+    properties:
+      id:
+        type: integer
+        format: int64
+      username:
+        type: string
+        example: selva
+      firstName:
+        type: string
+        example: selva
+      lastName:
+        type: string
+        example: vignesh
+      email:
+        type: string
+        example: selva@gmail.com
+      password:
+        type: string
+        example: 123456
+      phone:
+        type: string
+        example: 6356789090
+  Product:
+    type: object
+    required:
+    - title
+    - description
+    - productimage
+    - price
+    - stock
+    - category
+    properties:
+      id:
+        type: integer
+        format: int64
+      title:
+        type: string
+        example: table
+      description:
+        type: string
+        example: a home decor
+      productimage:
+        type: buffer
+        example: https://www.firebase.com/li.jpg
+      price:
+        type: string
+        example: $99.9
+      stock:
+        type: number
+        example: 23
+      category:
+        type: string
+        example: decor
+  Admin:
+    type: object
+    required:
+    - username
+    - email
+    - password
+    properties:
+      id:
+        type: integer
+        format: int64
+      username:
+        type: string
+        example: selva
+      email:
+        type: string
+        example: selva@gmail.com
+      password:
+        type: string
+        example: 123456
+  Sales:
+    type: object
+    required:
+    - username
+    - email
+    - products
+    - cost
+    properties:
+      id:
+        type: integer
+        format: int64
+      username:
+        type: string
+        example: selva
+      email:
+        type: string
+        example: selva@gmail.com
+      cost:
+        type: number
+        example: 500
+      products : 
+        type: object
+  ApiResponse:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      type:
+        type: string
+      message:
+        type: string
+# host: localhost:4001
+# basePath: /api
+# schemes:
+#  - http
+# Added by API Auto Mocking Plugin
+host: localhost:4001
+basePath: /api
+schemes:
+ - http

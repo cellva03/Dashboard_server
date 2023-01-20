@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js & node ./micro_services/bulk_service.js",
+    "start": "node app.js",
     "dev": "nodemon app.js",
     "bulk" : "nodemon ./micro_services/bulk_service.js"
   },
